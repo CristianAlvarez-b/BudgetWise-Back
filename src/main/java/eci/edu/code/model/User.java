@@ -12,7 +12,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
     private String token;
     @JsonIgnore
@@ -24,6 +27,11 @@ public class User {
 
     public User(Long id) {
         this.id = id;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     public Long getId() {

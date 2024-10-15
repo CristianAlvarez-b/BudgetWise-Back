@@ -23,8 +23,14 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public void createUser(User user) {
+        // Verificar si el username ya existe
+        Optional<User> existingUser = userRepository.findByUsername(user.getUsername());
+        if (existingUser.isPresent()) {
+            throw new IllegalArgumentException("The username is already in use, please try a new one.");
+        }
+        // Si no existe, crea el usuario
+        userRepository.save(user);
     }
 
     public void deleteUser(Long id) {
